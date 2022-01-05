@@ -25,6 +25,16 @@ app.post('/todo/add',(req,res)=>{
     res.send("post add")
 })
 
+app.post('/todo/updatecheck',async (req,res)=>{
+    console.log('res...updateckeck',req.body.title);
+
+    let list2=req.body;
+    await useMongo.updateOne(
+        {title: list2.title},{$set:{checked: list2.checked}}
+    )
+    
+    res.send("post updatecheck")
+})
 
 app.post('/todo/update',async (req,res)=>{
     console.log('res...b/fupdate',req.body.prevtitle);

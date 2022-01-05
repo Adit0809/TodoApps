@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect, useState, useContext } from 'react';
-import { FAB, CheckBox } from 'react-native-elements';
+import { FAB} from 'react-native-elements';
 import { TodoContext } from './contextDo';
 import { Button } from 'react-native';
-
+import CheckBox from  '@react-native-community/checkbox';
 import {
   StyleSheet,
   Text,
@@ -11,52 +11,64 @@ import {
   View,
 } from 'react-native';
 import axios from 'axios';
+import { status } from 'express/lib/response';
 // import { Button } from 'react-native';
 
 const Display = props => {
 
 
   const { list, setList } = useContext(TodoContext);
-  const urilist={...list};
+  const urilist = { ...list };
 
   const { navigation } = props;
 
   const del = id => {
     setList(pre => pre.filter(items => items?.id !== id));
   };
-  useEffect(()=>{
+  useEffect(() => {
     axios
-    .get('http://10.0.2.2:8888/todo1')
-    .then(res=>{
-      console.log('myuseeffect',res.data)
-      setList(res.data);})
-      .catch(e=>{
-        console.log('eeerrr',e);
+      .get('http://10.0.2.2:8888/todo1')
+      .then(res => {
+        console.log('myuseeffect', res.data)
+        setList(res.data);
+      })
+      .catch(e => {
+        console.log('eeerrr', e);
       });
-    },[]);
+  }, []);
 
-    // const updateItem=(val,item)=>{
-    //   axios
-    //   .post('http://10.0.2.2:8888/todo1',{
-    //     title:item.title
+  const  statusOfCheck=(val,item)=>{
+    var data=[...list];
+    data=data.map(itm=>{
+      if (itm===item){
+      return{...itm,checked:val};
+    }return{...itm};
+    });setList(data);
+  }
 
-    //   })
-    //   .then(data=>{})
-    //   .catch(e=>{
-    //     console.log('error<>',e);
-    //   })
-    // }
+  const updateCheck=(val,item)=>{
+    axios
+    .post('http://10.0.2.2:8888/todo/updatecheck',{
+      checked:val,
+      title:item.title
 
-    const deleteItem=id=>{
-      axios
-      .post('http://10.0.2.2:8888/todo/delete',{
-        uid:id,
+    })
+    .then(data=>{})
+    .catch(e=>{
+      console.log('error<5>',e);
+    })
+  }
+
+  const deleteItem = id => {
+    axios
+      .post('http://10.0.2.2:8888/todo/delete', {
+        uid: id,
       })
-      .then(data=>{})
-      .catch(e=>{
-        console.log('error<>',e)
+      .then(data => { })
+      .catch(e => {
+        console.log('error<>', e)
       })
-    }
+  }
 
 
 
@@ -67,7 +79,7 @@ const Display = props => {
 
       <FlatList
         data={list}
-        renderItem={({ item, index }) => (
+        renderItem={({ item, index }) => (<View>
           <View style={{ flex: 1, flexDirection: 'row' }}>
             <Text
               style={style2.liststyle}
@@ -88,7 +100,19 @@ const Display = props => {
               }}>
               D
             </Text>
-                     </View>
+            <CheckBox
+              value={item.checked}
+              onValueChange={val => {
+                statusOfCheck(val, item);
+                updateCheck(val, item);
+              }}
+              style={style2.check} />
+
+          </View>
+          <Text>
+            {item.checked ? 'status completed' : 'status Incomleted'}
+          </Text>
+        </View>
         )}
 
 
@@ -117,15 +141,25 @@ const style2 = StyleSheet.create({
     backgroundColor: 'lightgreen',
   },
   liststyle: {
+
     fontSize: 25,
     backgroundColor: 'white',
     color: 'blue',
     margin: 10,
-    width: 300,
+    width: 250,
     padding: 20,
     borderRadius: 15,
   },
   btn: { padding: 10, color: 'blue' },
+  check:{
+    fontSize:20,
+    backgroundColor:'white',
+    color:'violet',
+    margin:10,
+    padding:20,
+    borderRadius:10,
+    alignSelf:'center'
+  },
   del: {
     fontSize: 25,
     backgroundColor: 'white',

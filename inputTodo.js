@@ -16,7 +16,7 @@ const Input = props => {
     const { navigation } = props;
 
     const [text, setText] = useState('');
-    //const {title, id} = route.params;
+   
 
     const addition = () => {
         setList(list => list.concat(
