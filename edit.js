@@ -1,14 +1,10 @@
 import React, {useContext, useState, useRoute} from 'react';
 import {FAB} from 'react-native-elements';
 import {TodoContext} from './contextDo';
+import axios from "axios";
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
   TextInput,
-  useColorScheme,
   View,
 } from 'react-native';
 import {ListItem} from 'react-native-elements/dist/list/ListItem';
@@ -31,6 +27,20 @@ const Edit = props => {
       }),
     );
   };
+
+  const editItem=(val,name)=>{
+    axios
+    .post('http://10.0.2.2:8888/todo/update',{
+      title:val,
+      prevtitle:name
+    })
+    .then(data=>{
+      navigation.push('A');
+    })
+    .catch(e=>{
+      console.log('error>>',e)
+    })
+  }
   return (
     <View style={{flex: 1}}>
       {/*  <Text>Edit</Text> */}
@@ -52,6 +62,7 @@ const Edit = props => {
         onPress={() => {
           navigation.push('A');
           update();
+          editItem(val,name);
         }}
       />
     </View>
@@ -62,7 +73,7 @@ const style3 = StyleSheet.create({
   btn3: {position: 'absolute', right: 1, bottom: 1, margin: 20},
   input: {
     backgroundColor: 'skyblue',
-    color: 'red',
+    color: 'black',
     margin: 10,
     borderRadius: 10,
     padding: 15,

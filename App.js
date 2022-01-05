@@ -35,14 +35,14 @@
          setList,
          
        }}>
-       {/* <ScrollView style={{flex:1}}> */}
+    
        <View
          style={{
            flex: 1,
-           backgroundColor: 'beige',
+           backgroundColor: 'skyblue'
          }}>
          <Text style={{textAlign: 'center', fontSize: 30, color: 'crimson'}}>
-           TODO fLIST
+           TODO LIST
          </Text>
  
          <NavigationContainer>
@@ -53,7 +53,7 @@
            </Stack.Navigator>
          </NavigationContainer>
        </View>
-       {/* </ScrollView> */}
+  
      </TodoContext.Provider>
    );
  };
