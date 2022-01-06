@@ -26,6 +26,7 @@ const Input = props => {
             }),
 
         );
+        navigation.push('A');
 
     };
 
@@ -38,9 +39,9 @@ const Input = props => {
                 id: Date.now()
             })
             .then(data => {
+                
 
-
-                navigation.push('A');
+              
             })
 
             .catch(e => {

@@ -8,18 +8,13 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  View,
+  View,Image,TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
-import { status } from 'express/lib/response';
-// import { Button } from 'react-native';
 
 const Display = props => {
-
-
   const { list, setList } = useContext(TodoContext);
   const urilist = { ...list };
-
   const { navigation } = props;
 
   const del = id => {
@@ -29,11 +24,11 @@ const Display = props => {
     axios
       .get('http://10.0.2.2:8888/todo1')
       .then(res => {
-        console.log('myuseeffect', res.data)
+       // console.log('myuseeffect', res.data)
         setList(res.data);
       })
       .catch(e => {
-        console.log('eeerrr', e);
+        console.log('useeffect', e);
       });
   }, []);
 
@@ -66,7 +61,7 @@ const Display = props => {
       })
       .then(data => { })
       .catch(e => {
-        console.log('error<>', e)
+        console.log('errordelete', e)
       })
   }
 
@@ -81,6 +76,14 @@ const Display = props => {
         data={list}
         renderItem={({ item, index }) => (<View>
           <View style={{ flex: 1, flexDirection: 'row' }}>
+          <CheckBox
+              value={item.checked}
+              onValueChange={val => {
+                statusOfCheck(val, item);
+                updateCheck(val, item);
+              }}
+              style={style2.check} />
+
             <Text
               style={style2.liststyle}
               onPress={e => {
@@ -91,23 +94,17 @@ const Display = props => {
               }}>
               {item?.title}
             </Text>
-            {/* <Button> </Button> */}
-            <Text
-              style={style2.del}
+           
+            <TouchableOpacity 
+              style={style2.del} 
               onPress={e => {
-                del(item.id);
-                deleteItem(item.id)
-              }}>
-              D
-            </Text>
-            <CheckBox
-              value={item.checked}
-              onValueChange={val => {
-                statusOfCheck(val, item);
-                updateCheck(val, item);
-              }}
-              style={style2.check} />
+              del(item.id);  
+              deleteItem(item.id)}}>
+              <Image source={require('./assets/images/icons8-delete-30.png')} />
 
+            </TouchableOpacity>
+            
+           
           </View>
           <Text>
             {item.checked ? 'status completed' : 'status Incomleted'}
@@ -117,6 +114,7 @@ const Display = props => {
 
 
       />
+           
 
       <FAB
         visible={true}
@@ -147,7 +145,7 @@ const style2 = StyleSheet.create({
     color: 'blue',
     margin: 10,
     width: 250,
-    padding: 20,
+    padding: 20,    
     borderRadius: 15,
   },
   btn: { padding: 10, color: 'blue' },

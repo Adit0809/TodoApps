@@ -5,10 +5,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 const mongoose=require('mongoose');
 const useMongo=require('./schemas/schema')
-
-// const cors=require('cors')
-// app.use(cors())
-
+const router =require('./router')
 
 
 app.get("/todo1",async (req,res)=>{
@@ -18,45 +15,8 @@ app.get("/todo1",async (req,res)=>{
     res.send(d)
 });
 
-app.post('/todo/add',(req,res)=>{
-    console.log('res...add',req.body)
-    let list1=req.body;
-    useMongo.create(list1);
-    res.send("post add")
-})
+app.use('/todo',router)
 
-app.post('/todo/updatecheck',async (req,res)=>{
-    console.log('res...updateckeck',req.body.title);
-
-    let list2=req.body;
-    await useMongo.updateOne(
-        {title: list2.title},{$set:{checked: list2.checked}}
-    )
-    
-    res.send("post updatecheck")
-})
-
-app.post('/todo/update',async (req,res)=>{
-    console.log('res...b/fupdate',req.body.prevtitle);
-
-    let list2=req.body;
-    await useMongo.updateOne(
-        {title:list2.prevtitle},{$set:{title:list2.title}}
-    )
-    
-    res.send("post update")
-})
-
-app.post('/todo/delete',async (req,res)=>{
-    console.log('res...delete',req.body.uid);
-
-    let list3=req.body;
-    await useMongo.deleteOne(
-        {id:list3.uid}
-    )
-    
-    res.send("post delete")
-})
 
 mongoose.connect('mongodb://localhost:27017/todo1',{
     useNewUrlParser:true,

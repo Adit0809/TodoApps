@@ -11,23 +11,18 @@
  import {NavigationContainer} from '@react-navigation/native';
  import {createNativeStackNavigator} from '@react-navigation/native-stack';
  import {useState, useContext} from 'react';
- import {
-   Text,
-   View,
- } from 'react-native';
- 
-
+ import {Text,View,} from 'react-native';
  import Display from './displayTodo';
  import Input from './inputTodo';
  import {TodoContext} from './contextDo';
  import Edit from './edit';
+
  const Stack = createNativeStackNavigator();
- 
- const App = () => {
+
+  const App = () => {
    
    const [list, setList] = useState([]);
-   
- 
+  
    return (
      <TodoContext.Provider
        value={{
@@ -36,11 +31,8 @@
          
        }}>
     
-       <View
-         style={{
-           flex: 1,
-           backgroundColor: 'skyblue'
-         }}>
+       <View style={{flex: 1,backgroundColor: 'skyblue'}}>
+         
          <Text style={{textAlign: 'center', fontSize: 30, color: 'crimson'}}>
            TODO LIST
          </Text>
@@ -52,9 +44,10 @@
              <Stack.Screen name="C" component={Edit} />
            </Stack.Navigator>
          </NavigationContainer>
-       </View>
+      
+        </View>
   
-     </TodoContext.Provider>
+      </TodoContext.Provider>
    );
  };
 
@@ -63,3 +56,5 @@ export default App;
 
 
 // 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
+
+// nvm use v14
