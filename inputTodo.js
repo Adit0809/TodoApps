@@ -4,7 +4,7 @@ import { FAB } from 'react-native-elements';
 import { TodoContext } from './contextDo';
 const axios = require('axios').default;
 
-import {
+import {multiline,
     StyleSheet,
     Text,
     TextInput,
@@ -57,6 +57,7 @@ const Input = props => {
         <View style={{ flex: 1 }}>
             <Text style={style1.heading}>Add your task:</Text>
             <TextInput
+                multiline
                 style={style1.input}
                 placeholder="Task...."
                 onChangeText={val => setText(val)}

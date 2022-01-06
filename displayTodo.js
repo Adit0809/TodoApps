@@ -84,7 +84,7 @@ const Display = props => {
               }}
               style={style2.check} />
 
-            <Text
+            <Text 
               style={style2.liststyle}
               onPress={e => {
                 navigation.navigate('C', {
@@ -130,18 +130,19 @@ const Display = props => {
   );
 };
 const style2 = StyleSheet.create({
-  head: {
-    padding: 10,
-    margin: 10,
+  head: {borderRadius:15,
+    borderWidth:1,
+    padding: 5,
+    margin: 5,
     textAlign: 'center',
     fontSize: 25,
     color: 'black',
     backgroundColor: 'lightgreen',
   },
   liststyle: {
-
+backgroundColor:'skyblue',
     fontSize: 25,
-    backgroundColor: 'white',
+    borderWidth:1,
     color: 'blue',
     margin: 10,
     width: 250,
@@ -150,21 +151,24 @@ const style2 = StyleSheet.create({
   },
   btn: { padding: 10, color: 'blue' },
   check:{
-    fontSize:20,
+    fontSize:25,
     backgroundColor:'white',
     color:'violet',
     margin:10,
     padding:20,
-    borderRadius:10,
-    alignSelf:'center'
+    borderRadius:15,
+    alignSelf:'center',borderWidth:1,
   },
   del: {
+    textAlign:'center',
+    justifyContent:'center',
     fontSize: 25,
     backgroundColor: 'white',
     color: 'blue',
     margin: 10,
     padding: 20,
     borderRadius: 15,
+    backgroundColor:"skyblue"
   },
 });
 
