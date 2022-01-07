@@ -23,6 +23,7 @@ const Input = props => {
             {
                 title: text,
                 id: Date.now(),
+                checked:false
             }),
 
         );
@@ -36,7 +37,8 @@ const Input = props => {
         axios
             .post('http://10.0.2.2:8888/todo/add', {
                 title: text,
-                id: Date.now()
+                id: Date.now(),
+                checked:false
             })
             .then(data => {
                 
